@@ -54,12 +54,17 @@ namespace RestApp
                 {
                     if (retryCount >= _retryMaxCount)
                     {
+                        _logger.Error(ex);
                         throw;
                     }
-                    _logger.Error(ex);
-                    
+
                     await Task.Delay(_delayMilliseconds);
                     retryCount++;
+                }
+                catch (Exception ex)
+                {
+                    _logger.Error(ex);
+                    throw;
                 }
             }
         }
